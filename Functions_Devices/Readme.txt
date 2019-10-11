@@ -1,0 +1,1 @@
+The functions in this directory are meant to support connecting to the CEE/GLE 291 test devices used in the MATLAB and DAQ portions of the course. There are hardcoded values in the connection settings intended for the specific device to which you will be connecting during class. Therefore, don't assume that you can use this code to connect to any serial device.

@@ -1,0 +1,3 @@
+Year,Arrests,Citations,Ejections
+2019,20,22,24
+2018,22,24,47
