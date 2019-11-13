@@ -1,10 +1,12 @@
 function [latVals, lonVals] = extractCoordinates(srcDir, resultsFileName)
 
     myFiles = dir(srcDir);
+    myFiles = myFiles(3:end);
+    
     itemCount = length(myFiles);
     
-    myLats = zeros(itemCount - 2, 1);
-    myLons = zeros(itemCount - 2, 1);
+    myLats = zeros(itemCount, 1);
+    myLons = zeros(itemCount, 1);
     
     outName = [srcDir, '\', resultsFileName];
     
@@ -12,7 +14,7 @@ function [latVals, lonVals] = extractCoordinates(srcDir, resultsFileName)
     hdrStr = ['Latitude,Longitude,PhotoName,FullPath', newline];
     fwrite(fConn, hdrStr);
     
-    for i = 3:itemCount
+    for i = 1:itemCount
 
         photoName = myFiles(i).name;
         fPath = [srcDir, '\', photoName];
@@ -22,8 +24,8 @@ function [latVals, lonVals] = extractCoordinates(srcDir, resultsFileName)
         toWrite = sprintf('%.8f,%.8f,"%s","%s"\n', lat, lon, photoName, fPath);
         fwrite(fConn, toWrite);
         
-        myLats(i - 2) = lat;
-        myLons(i - 2) = lon;
+        myLats(i) = lat;
+        myLons(i) = lon;
 
     end
     
