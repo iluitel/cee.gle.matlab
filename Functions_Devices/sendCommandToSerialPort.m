@@ -1,12 +1,8 @@
 function resp = sendCommandToSerialPort(sPort, cmd)
 
     fprintf(sPort, cmd);
-
-    while 1
-        if sPort.BytesAvailable
-            break;
-        end
-    end
+    
+    waitUntilDataAvailable(sPort);
 
     resp = readSerialPort(sPort);
 
