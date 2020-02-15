@@ -1,20 +1,25 @@
 function sequentialFileRenaming(srcDir, nameTemplate, offset)
 
-    myFiles = dir(srcDir);
+    myFiles = getFileNames(srcDir);
 
-    % Start at 3 because the first 2 items in the myFiles structure array are
-    % not actual files.
-  
-    for i = 3:length(myFiles)
+    for i = 1:length(myFiles)
 
-        % Generate character arrays containing the original version of the
-        % original file names and destination file names that include the
-        % directory (i.e. create full paths).
+        originalFullPath = myFiles{i};
         
-        originalName = [srcDir, '\', myFiles(i).name];
-        newName = [srcDir, '\', sprintf(nameTemplate, i + offset)];
+        % Isolates the extension of the file so that it can be added to the new
+        % name based on the nameTemplate passed as input.
+        extensionsStartsAt = max(strfind(originalFullPath, '.'));
+        extension = originalFullPath(extensionsStartsAt:end);
+
+        % A new file name is created using created using two methods
+        % of concatenation. Notice that the offset is used to control the first
+        % number used in a sequence.
+        newName = sprintf(nameTemplate, i + offset);
+        nName = [srcDir, '\', newName, extension];
         
-        movefile(originalName, newName);
+        % Move file is a matlab function that makes it possible to move one file
+        % from one location to another, which is effectively also a rename.
+        movefile(originalFullPath, nName);
 
     end
 
